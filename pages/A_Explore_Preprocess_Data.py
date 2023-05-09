@@ -1,5 +1,5 @@
 import streamlit as st                  # pip install streamlit
-from helper_functions import fetch_dataset
+from helper_functions import fetch_dataset, display_missingValue
 
 #############################################
 
@@ -28,20 +28,23 @@ if df is not None:
     # Inspect the dataset
     st.markdown('### Inspect and visualize some interesting features')
 
-    # Deal with missing values
-    st.markdown('### Handle missing values')
+    #display missing data for df_cab and df_weather/ Olga
+    st.markdown('### Missing Data') 
+    missing_data = display_missingValue(df_cab, df_weather)
+    st.dataframe(missing_data)
+    # Deal with missing values for cab /Olga
+    st.markdown('### Handle missing values for cab')
+
+    # Deal with missing values for weather /Mary
+    st.markdown('### Handle missing values for weather') 
+
+    #merge df_cab and df_weather /Mary
+    st.markdown('### Merge cab and weather data')
 
     # Handle Text and Categorical Attributes
     st.markdown('### Handling Non-numerical Features')
 
-    # Some feature selections/engineerings here
-    st.markdown('### Remove Irrelevant/Useless Features')
 
-    # Remove outliers
-    st.markdown('### Remove outliers')
-
-    # Normalize your data if needed
-    st.markdown('### Normalize data')
 
     st.markdown('### You have preprocessed the dataset.')
     st.dataframe(df)

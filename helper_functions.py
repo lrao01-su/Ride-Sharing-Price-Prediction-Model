@@ -15,16 +15,21 @@ def fetch_dataset():
     Output: None
     """
     # Check stored data
-    df = None
-    data = None
-    if 'data' in st.session_state:
-        df = st.session_state['data']
+    data_list = None
+    uploaded_files = None
+    if 'uploaded_files' in st.session_state:
+        data_list = st.session_state['uploaded_files']
     else:
-        data = st.file_uploader(
-            'Upload a Dataset', type=['csv', 'txt'])
+        uploaded_files = st.file_uploader(
+            'Upload a Dataset', type=['csv', 'txt'], accept_multiple_files=True)
 
-        if (data):
-            df = pd.read_csv(data)
-    if df is not None:
-        st.session_state['data'] = df
-    return df
+        if (uploaded_files):
+            #df = pd.read_csv(data)
+            data_list = []
+            for f in uploaded_files:
+                uploaded_files = pd.read_csv(f)
+                data_list.append(uploaded_files)
+
+    if data_list is not None:
+        st.session_state['uploaded_files'] = data_list
+    return data_list

@@ -29,7 +29,24 @@ def fetch_dataset():
             for f in uploaded_files:
                 uploaded_files = pd.read_csv(f)
                 data_list.append(uploaded_files)
-
+                #store as df_cab and df_weather
+                df_cab = uploaded_files[0]
+                df_weather = uploaded_files[1]
     if data_list is not None:
         st.session_state['uploaded_files'] = data_list
-    return data_list
+    
+    return df_cab, df_weather
+
+#Page A 
+def display_missingValue():
+    """
+    This function displays the missing value of the datasets
+
+    Input:
+        - two df_cab, df_weather
+    Output:
+        - missing values of the datasets
+    """
+#code here
+
+

@@ -21,8 +21,9 @@ if df is not None:
     # Display original dataframe
     st.markdown('View initial data with missing values or invalid inputs')
     st.markdown('You have uploaded the dataset.')
-
-    st.dataframe(df)
+    #write multiple dataframes
+    for i in range(len(df)):
+        st.dataframe(df[i])
 
     # Inspect the dataset
     st.markdown('### Inspect and visualize some interesting features')

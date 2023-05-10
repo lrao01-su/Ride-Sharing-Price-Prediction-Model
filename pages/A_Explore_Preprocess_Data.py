@@ -3,18 +3,6 @@ from helper_functions import fetch_dataset, display_missingValue
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
-from pandas.plotting import scatter_matrix
-import os
-import tarfile
-import urllib.request
-from itertools import combinations
-
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
-from sklearn.linear_model import LinearRegression
-
 #############################################
 
 st.markdown("# Practical Applications of Machine Learning (PAML)")
@@ -33,6 +21,7 @@ df = fetch_dataset()
 
 
 
+
 if df is not None:
     # Display original dataframe
     st.markdown('View initial data with missing values or invalid inputs')
@@ -46,7 +35,8 @@ if df is not None:
 
     #display missing data for df_cab and df_weather/ Olga
     st.markdown('### Missing Data') 
-    missing_data = display_missingValue(df_cab, df_weather)
+    missing_data = display_missingValue(df_rides, df_weather)
+
     st.dataframe(missing_data)
     # Deal with missing values for cab /Olga
     st.markdown('### Handle missing values for cab')
@@ -59,8 +49,6 @@ if df is not None:
 
     # Handle Text and Categorical Attributes
     st.markdown('### Handling Non-numerical Features')
-
-
 
     st.markdown('### You have preprocessed the dataset.')
     st.dataframe(df)

@@ -3,18 +3,6 @@ from helper_functions import load_dataset, display_missingValue
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
-from pandas.plotting import scatter_matrix
-import os
-import tarfile
-import urllib.request
-from itertools import combinations
-
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
-from sklearn.linear_model import LinearRegression
-
 #############################################
 
 st.markdown("# Practical Applications of Machine Learning (PAML)")
@@ -39,6 +27,7 @@ if cab_data and weather_data:
     ###################### EXPLORE DATASET #######################
     st.markdown('### Explore Dataset Features')
 
+<<<<<<< HEAD
     # Load dataset
     df_cab = load_dataset(cab_data)
     df_weather = load_dataset(weather_data)
@@ -51,13 +40,26 @@ if cab_data and weather_data:
     st.dataframe(df_cab)
     st.write("df_weather")
     st.dataframe(df_weather)
+=======
+
+
+
+if df is not None:
+    # Display original dataframe
+    st.markdown('View initial data with missing values or invalid inputs')
+    st.markdown('You have uploaded the dataset.')
+    #write multiple dataframes
+    for i in range(len(df)):
+        st.dataframe(df[i])
+>>>>>>> 52f0cf8b72dd871cb844c9ff53fea1d35a73d1c1
 
     # Inspect the dataset
     st.markdown('### Inspect and visualize some interesting features')
 
     #display missing data for df_cab and df_weather/ Olga
     st.markdown('### Missing Data') 
-    missing_data = display_missingValue(df_cab, df_weather)
+    missing_data = display_missingValue(df_rides, df_weather)
+
     st.dataframe(missing_data)
     # Deal with missing values for cab /Olga
     st.markdown('### Handle missing values for cab')
@@ -70,8 +72,6 @@ if cab_data and weather_data:
 
     # Handle Text and Categorical Attributes
     st.markdown('### Handling Non-numerical Features')
-
-
 
     st.markdown('### You have preprocessed the dataset.')
     #st.dataframe(df)

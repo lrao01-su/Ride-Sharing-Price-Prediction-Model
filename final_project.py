@@ -3,7 +3,7 @@ import streamlit as st                  # pip install streamlit
 st.markdown("# Practical Applications of Machine Learning (PAML)")
 
 #############################################
-st.sidebar.image: st.sidebar.image("/Users/jinglin/Desktop/PAML/Uber_Lyft_Final/datasets/uberlyft_logo.png", use_column_width=True)
+st.sidebar.image: st.sidebar.image("https://www.alistdaily.com/wp-content/uploads/2018/11/UberLyft_Hero_111518-1024x576.jpg", use_column_width=True)
 
 #############################################
 

@@ -1,5 +1,19 @@
 import streamlit as st                  # pip install streamlit
 from helper_functions import fetch_dataset, display_missingValue
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+from pandas.plotting import scatter_matrix
+import os
+import tarfile
+import urllib.request
+from itertools import combinations
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+from sklearn.linear_model import LinearRegression
 
 #############################################
 
@@ -16,6 +30,8 @@ st.markdown('# Explore & Preprocess Dataset')
 #############################################
 df = None
 df = fetch_dataset()
+
+
 
 if df is not None:
     # Display original dataframe

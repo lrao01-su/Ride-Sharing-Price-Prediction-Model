@@ -6,39 +6,10 @@ from sklearn.metrics import recall_score, precision_score, accuracy_score
 # All pages
 
 
-def fetch_dataset():
-    """
-    This function renders the file uploader that fetches the dataset either from local machine
 
-    Input:
-        - page: the string represents which page the uploader will be rendered on
-    Output: None
-    """
-    # Check stored data
-    data_list = None
-    uploaded_files = None
-    if 'uploaded_files' in st.session_state:
-        data_list = st.session_state['uploaded_files']
-    else:
-        uploaded_files = st.file_uploader(
-            'Upload a Dataset', type=['csv', 'txt'], accept_multiple_files=True)
-
-        if (uploaded_files):
-            #df = pd.read_csv(data)
-            data_list = []
-            for f in uploaded_files:
-                uploaded_files = pd.read_csv(f)
-                data_list.append(uploaded_files)
-                #store as df_cab and df_weather
-                df_cab = uploaded_files[0]
-                df_weather = uploaded_files[1]
-    if data_list is not None:
-        st.session_state['uploaded_files'] = data_list
-    
-    return df_cab, df_weather
 
 #Page A 
-def display_missingValue():
+def display_missingValue(df_cab, df_weather):
     """
     This function displays the missing value of the datasets
 
@@ -48,5 +19,13 @@ def display_missingValue():
         - missing values of the datasets
     """
 #code here
+    #show missing data for df_cab and df_weather
+    missing_data = df_cab.isnull().sum()
+    missing_data = missing_data.reset_index()
+    missing_data.columns = ['column_name', 'missing_count']
+    missing_data['filling_factor'] = (df_cab.shape[0]
+                                        - missing_data['missing_count']) / df_cab.shape[0] * 100
+    missing_data = missing_data.sort_values('filling_factor').reset_index(drop=True)
+    return missing_data
 
 

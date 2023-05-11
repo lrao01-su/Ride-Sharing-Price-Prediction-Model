@@ -29,6 +29,7 @@ st.markdown("### Farelytics ML: Using Machine Learning to Analyze and Compare Ub
 st.markdown('# Explore & Preprocess Dataset')
 
 #############################################
+
 col1, col2 = st.columns(2)
 # with(col1):
 with(col1):
@@ -131,8 +132,19 @@ if cab_data and weather_data is not None:
 
 
 
-    # Handle Text and Categorical Attributes
-    st.markdown('### Handling Non-numerical Features')
+    # find outliers in df_cab and df_weather
+    st.markdown('### Find Outliers in df_cab and df_weather')
+   
+   #create a button to run in streamlit for find outliers in df by plotting boxplot
+    if st.button('Find Outliers in df_cab and df_weather'):
+        #plot boxplot for df_cab and df_weather
+        st.markdown('### Boxplot for df_cab and df_weather')
+        st.write(df.boxplot())
+        #create button to drop outliers in df_cab and df_weather
+        
+
+
+   
 
     st.markdown('### You have preprocessed the dataset.')
     #st.dataframe(df)

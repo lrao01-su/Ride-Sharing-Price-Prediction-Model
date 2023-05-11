@@ -1,5 +1,5 @@
 import streamlit as st                  # pip install streamlit
-from helper_functions import  display_missingValue
+from helper_functions import  display_missingValue, fill_missingValue
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -65,14 +65,14 @@ if cab_data and weather_data is not None:
     st.markdown('### Missing Data') 
     missing_data = display_missingValue(df_cab, df_weather)
     st.dataframe(missing_data)
-    # Deal with missing values for cab /Olga
-    st.markdown('### Handle missing values for cab')
-
-    # Deal with missing values for weather /Mary
-    st.markdown('### Handle missing values for weather') 
+    # Deal with missing values for df_cab /Olga
+    
+    #display missing data for df_weather
+    
 
     #merge df_cab and df_weather /Mary
     st.markdown('### Merge cab and weather data')
+
 
     # Handle Text and Categorical Attributes
     st.markdown('### Handling Non-numerical Features')

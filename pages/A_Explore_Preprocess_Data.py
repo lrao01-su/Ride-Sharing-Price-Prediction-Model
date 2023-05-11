@@ -31,13 +31,25 @@ st.markdown('# Explore & Preprocess Dataset')
 col1, col2 = st.columns(2)
 # with(col1):
 with(col1):
-    cab_data = st.file_uploader("Upload Your df_cab Dataset", type=['csv','txt'])
+    if 'df_cab' in st.session_state:
+        df_cab = st.session_state['cab_data']
+    else:
+        cab_data = st.file_uploader("Upload Your df_cab Dataset", type=['csv','txt'])
+        if (cab_data):
+            df_cab = pd.read_csv(cab_data)
+            st.session_state['cab_data'] = df_cab
 # with(col2): #upload from cloud
 with(col2):
-    weather_data = st.file_uploader("Upload Your weather_cab Dataset", type=['csv','txt'])
+    if 'df_weather' in st.session_state:
+        df_weather = st.session_state['weather_data']
+    else:
+        weather_data = st.file_uploader("Upload Your df_weather Dataset", type=['csv','txt'])
+        if (weather_data):
+            df_weather = pd.read_csv(weather_data)
+            st.session_state['weather_data'] = df_weather
+
 if cab_data and weather_data is not None:
-    df_cab = pd.read_csv(cab_data)
-    df_weather = pd.read_csv(weather_data)
+    #display df_cab and df_weather dataframe
     st.write('You have successfully uploaded your dataset.')
     st.write('Continue to Explore and Preprocess Data')
     #show df_cab and df_weather dataframes

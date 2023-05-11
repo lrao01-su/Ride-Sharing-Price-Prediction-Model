@@ -1,5 +1,5 @@
 import streamlit as st                  # pip install streamlit
-from helper_functions import load_dataset, display_missingValue
+from helper_functions import fetch_dataset, display_missingValue
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -16,17 +16,10 @@ st.markdown("### Farelytics ML: Using Machine Learning to Analyze and Compare Ub
 st.markdown('# Explore & Preprocess Dataset')
 
 #############################################
-col1, col2 = st.columns(2)
-# with(col1):
-with(col1):
-    cab_data = st.file_uploader("Upload Your df_cab Dataset", type=['csv','txt'])
-# with(col2): #upload from cloud
-with(col2):
-    weather_data = st.file_uploader("Upload Your df_weather Dataset", type=['csv','txt'])
-if cab_data and weather_data:
-    ###################### EXPLORE DATASET #######################
-    st.markdown('### Explore Dataset Features')
+df = None
+df = fetch_dataset()
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     # Load dataset
     df_cab = load_dataset(cab_data)
@@ -42,6 +35,8 @@ if cab_data and weather_data:
     st.dataframe(df_weather)
 =======
 
+=======
+>>>>>>> parent of c3c48af (Update A_Explore_Preprocess_Data.py)
 
 
 if df is not None:
@@ -51,7 +46,10 @@ if df is not None:
     #write multiple dataframes
     for i in range(len(df)):
         st.dataframe(df[i])
+<<<<<<< HEAD
 >>>>>>> 52f0cf8b72dd871cb844c9ff53fea1d35a73d1c1
+=======
+>>>>>>> parent of c3c48af (Update A_Explore_Preprocess_Data.py)
 
     # Inspect the dataset
     st.markdown('### Inspect and visualize some interesting features')
@@ -74,6 +72,6 @@ if df is not None:
     st.markdown('### Handling Non-numerical Features')
 
     st.markdown('### You have preprocessed the dataset.')
-    #st.dataframe(df)
+    st.dataframe(df)
 
     st.write('Continue to Train Model')

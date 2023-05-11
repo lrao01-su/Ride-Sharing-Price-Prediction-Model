@@ -35,12 +35,19 @@ def remove_outliers(df, feature):
         - lower_bound: the lower 25th percentile of the data
         - upper_bound: the upper 25th percentile of the data
     """
-    dataset, lower_bound, upper_bound = None, -1, -1
-
+    df = df.dropna()
+    #dataset, lower_bound, upper_bound = None, -1, -1
     # Add code here
 
-    st.write('remove_outliers not implemented yet.')
+    Q1 = np.percentile(df[feature], 25)
+    Q3 = np.percentile(df[feature], 75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    dataset = df[(df[feature] > lower_bound) & (df[feature] < upper_bound)]
+    #st.write('remove_outliers not implemented yet.')
     return dataset, lower_bound, upper_bound
+
 
 
 

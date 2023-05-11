@@ -1,5 +1,5 @@
 import streamlit as st                  # pip install streamlit
-from helper_functions import  display_missingValue
+from helper_functions import  display_missingValue, remove_outliers
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -130,21 +130,21 @@ if cab_data and weather_data is not None:
     .merge(destination_weather_df, on='destination')
     df
 
-
-
-    # find outliers in df_cab and df_weather
-    st.markdown('### Find Outliers in df_cab and df_weather')
-   
-   #create a button to run in streamlit for find outliers in df by plotting boxplot
-    if st.button('Find Outliers in df_cab and df_weather'):
-        #plot boxplot for df_cab and df_weather
-        st.markdown('### Boxplot for df_cab and df_weather')
-        st.write(df.boxplot())
-        #create button to drop outliers in df_cab and df_weather
-        
-
-
-   
+    # Remove outliers
+    st.markdown("### Inspect Features and Remove Outliers")
+    numeric_columns = list(df.select_dtypes(include='number').columns)
+    
+    outlier_feature_select = None
+    outlier_feature_select = st.selectbox(
+        'Select a feature for outlier removal',
+        numeric_columns,
+    )
+    if (outlier_feature_select and st.button('Remove Outliers')):
+        df, lower_bound, upper_bound = remove_outliers(
+            df, outlier_feature_select)
+        st.write('Outliers for feature {} are lower than {} and higher than {}'.format(
+            outlier_feature_select, lower_bound, upper_bound))
+        st.write(df)
 
     st.markdown('### You have preprocessed the dataset.')
     #st.dataframe(df)

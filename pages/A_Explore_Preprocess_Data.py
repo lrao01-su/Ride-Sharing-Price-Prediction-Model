@@ -1,11 +1,24 @@
 import streamlit as st                  # pip install streamlit
-from helper_functions import fetch_dataset, display_missingValue
+from helper_functions import  display_missingValue
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly.express as px
+from pandas.plotting import scatter_matrix
+import os
+import tarfile
+import urllib.request
+from itertools import combinations
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+from sklearn.linear_model import LinearRegression
+
 #############################################
 
 st.markdown("# Practical Applications of Machine Learning (PAML)")
+st.sidebar.image: st.sidebar.image("https://www.alistdaily.com/wp-content/uploads/2018/11/UberLyft_Hero_111518-1024x576.jpg", use_column_width=True)
 
 #############################################
 
@@ -16,41 +29,88 @@ st.markdown("### Farelytics ML: Using Machine Learning to Analyze and Compare Ub
 st.markdown('# Explore & Preprocess Dataset')
 
 #############################################
-df = None
-df = fetch_dataset()
+col1, col2 = st.columns(2)
+# with(col1):
+with(col1):
+    if 'df_cab' in st.session_state:
+        df_cab = st.session_state['cab_data']
+    else:
+        cab_data = st.file_uploader("Upload Your df_cab Dataset", type=['csv','txt'])
+        if (cab_data):
+            df_cab = pd.read_csv(cab_data)
+            st.session_state['cab_data'] = df_cab
+# with(col2): #upload from cloud
+with(col2):
+    if 'df_weather' in st.session_state:
+        df_weather = st.session_state['weather_data']
+    else:
+        weather_data = st.file_uploader("Upload Your df_weather Dataset", type=['csv','txt'])
+        if (weather_data):
+            df_weather = pd.read_csv(weather_data)
+            st.session_state['weather_data'] = df_weather
 
-
-
-
-if df is not None:
-    # Display original dataframe
-    st.markdown('View initial data with missing values or invalid inputs')
-    st.markdown('You have uploaded the dataset.')
-    #write multiple dataframes
-    for i in range(len(df)):
-        st.dataframe(df[i])
-
+if cab_data and weather_data is not None:
+    #display df_cab and df_weather dataframe
+    st.write('You have successfully uploaded your dataset.')
+    st.write('Continue to Explore and Preprocess Data')
+    #show df_cab and df_weather dataframes
+    st.markdown('### df_cab Dataframe')
+    st.dataframe(df_cab)
+    st.markdown('### df_weather Dataframe')
+    st.dataframe(df_weather)
+   
+   
     # Inspect the dataset
     st.markdown('### Inspect and visualize some interesting features')
-
-    #display missing data for df_cab and df_weather/ Olga
-    st.markdown('### Missing Data') 
-    missing_data = display_missingValue(df_rides, df_weather)
-
+    #display missing data for df_cab and df_weather
+    missing_data = display_missingValue(df_cab, df_weather)
     st.dataframe(missing_data)
-    # Deal with missing values for cab /Olga
-    st.markdown('### Handle missing values for cab')
 
-    # Deal with missing values for weather /Mary
-    st.markdown('### Handle missing values for weather') 
+    #display df_cab and df_weather dataframes
+    st.markdown('### df_cab Dataframe')
+    st.dataframe(df_cab)
+    st.markdown('### df_weather Dataframe')
+    st.dataframe(df_weather)
 
-    #merge df_cab and df_weather /Mary
+    #remove missing data in df_cab
+    st.markdown('### Remove Missing df_cab Data')
+    #create a button to run in streamlit for remove missing data in df_cab
+    if st.button('Remove Missing df_cab Data'):
+        df_cab = df_cab.dropna()
+        st.write(df_cab)
+        #write df_cab has removed missing data
+        st.write('df_cab has removed missing data')
+
+    # Deal with missing values for df_weather 
+    #fill missing data in df_weather
+    st.markdown('### Fill Missing df_weather Data')
+    #create a button to run in streamlit for fill missing data in df_weather with 0
+    if st.button('Fill Missing df_weather Data'):
+        df_weather = df_weather.fillna(0)
+        st.write(df_weather)
+        #write df_weather has filled missing data
+        st.write('df_weather has filled missing data')
+
+    
+    #drop time_stamp column in df_weather
+    st.markdown('### Drop df_weather Time_stamp Column')
+    df_weather = df_weather.drop(['time_stamp'], axis=1)
+    st.write(df_weather)
+    # group weather data by average based on the same location
+    st.markdown('### Group df_weather Data by average based on the same location')
+    df_weather_avg = df_weather.groupby(['location']).mean().reset_index()
+    st.write(df_weather_avg)
+
+    #merge df_cab and df_weather
     st.markdown('### Merge cab and weather data')
+    df = pd.merge(df_cab, df_weather_avg, on='location')
+    
+
 
     # Handle Text and Categorical Attributes
     st.markdown('### Handling Non-numerical Features')
 
     st.markdown('### You have preprocessed the dataset.')
-    st.dataframe(df)
+    #st.dataframe(df)
 
     st.write('Continue to Train Model')

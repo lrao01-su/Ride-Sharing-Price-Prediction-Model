@@ -19,13 +19,15 @@ def display_missingValue(df_cab, df_weather):
         - missing values of the datasets
     """
 #code here
-    #show missing data for df_cab and df_weather
-    missing_data = df_cab.isnull().sum()
-    missing_data = missing_data.reset_index()
-    missing_data.columns = ['column_name', 'missing_count']
-    missing_data['filling_factor'] = (df_cab.shape[0]
-                                        - missing_data['missing_count']) / df_cab.shape[0] * 100
-    missing_data = missing_data.sort_values('filling_factor').reset_index(drop=True)
-    return missing_data
-
+    #show missing data for df_cab and df_weather in two dataframes
+    st.markdown('### df_cab Missing Values')
+    st.dataframe(df_cab.isnull().sum())
+    st.markdown('### df_weather Missing Values')
+    st.dataframe(df_weather.isnull().sum())
+    #show missing data for df_cab and df_weather in two bar charts
+    st.markdown('### df_cab Missing Values')
+    st.bar_chart(df_cab.isnull().sum())
+    st.markdown('### df_weather Missing Values')
+    st.bar_chart(df_weather.isnull().sum())
+ 
 

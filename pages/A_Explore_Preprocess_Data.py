@@ -1,5 +1,5 @@
 import streamlit as st                  # pip install streamlit
-from helper_functions import fetch_dataset, display_missingValue
+from helper_functions import  display_missingValue
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -28,43 +28,27 @@ st.markdown("### Farelytics ML: Using Machine Learning to Analyze and Compare Ub
 st.markdown('# Explore & Preprocess Dataset')
 
 #############################################
-df = None
-df = fetch_dataset()
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-    # Load dataset
-    df_cab = load_dataset(cab_data)
-    df_weather = load_dataset(weather_data)
-    # Restore dataset if already in memory
-    st.session_state['df_cab']=df_cab
-    st.session_state['df_weather']=df_weather
-    
-    # Display dataframe as table using streamlit dataframe function
-    st.write("df_cab")
+col1, col2 = st.columns(2)
+# with(col1):
+with(col1):
+    cab_data = st.file_uploader("Upload Your df_cab Dataset", type=['csv','txt'])
+# with(col2): #upload from cloud
+with(col2):
+    weather_data = st.file_uploader("Upload Your weather_cab Dataset", type=['csv','txt'])
+if cab_data and weather_data is not None:
+    df_cab = pd.read_csv(cab_data)
+    df_weather = pd.read_csv(weather_data)
+    st.write('You have successfully uploaded your dataset.')
+    st.write('Continue to Explore and Preprocess Data')
+    #show df_cab and df_weather dataframes
+    st.markdown('### df_cab Dataframe')
     st.dataframe(df_cab)
-    st.write("df_weather")
+    st.markdown('### df_weather Dataframe')
     st.dataframe(df_weather)
-=======
-
-=======
->>>>>>> parent of c3c48af (Update A_Explore_Preprocess_Data.py)
-
-if df is not None:
-    # Display original dataframe
-    st.markdown('View initial data with missing values or invalid inputs')
-    st.markdown('You have uploaded the dataset.')
-    #write multiple dataframes
-    for i in range(len(df)):
-        st.dataframe(df[i])
-<<<<<<< HEAD
->>>>>>> 52f0cf8b72dd871cb844c9ff53fea1d35a73d1c1
-=======
->>>>>>> parent of c3c48af (Update A_Explore_Preprocess_Data.py)
-
+   
+   
     # Inspect the dataset
     st.markdown('### Inspect and visualize some interesting features')
-
     #display missing data for df_cab and df_weather/ Olga
     st.markdown('### Missing Data') 
     missing_data = display_missingValue(df_cab, df_weather)
@@ -84,6 +68,6 @@ if df is not None:
 
 
     st.markdown('### You have preprocessed the dataset.')
-    st.dataframe(df)
+    #st.dataframe(df)
 
     st.write('Continue to Train Model')

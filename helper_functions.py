@@ -6,19 +6,39 @@ from sklearn.metrics import recall_score, precision_score, accuracy_score
 # All pages
 
 
-def load_dataset(data):
+def fetch_dataset():
     """
-    Input: data is the filename or path to file (string)
-    Output: pandas dataframe df
-    - Checkpoint 1 - Read .csv file containing a dataset
-    """
-    #error checking - check for string
-    df = pd.read_csv(data)
-    return df
+    This function renders the file uploader that fetches the dataset either from local machine
 
+    Input:
+        - page: the string represents which page the uploader will be rendered on
+    Output: None
+    """
+    # Check stored data
+    data_list = None
+    uploaded_files = None
+    if 'uploaded_files' in st.session_state:
+        data_list = st.session_state['uploaded_files']
+    else:
+        uploaded_files = st.file_uploader(
+            'Upload a Dataset', type=['csv', 'txt'], accept_multiple_files=True)
+
+        if (uploaded_files):
+            #df = pd.read_csv(data)
+            data_list = []
+            for f in uploaded_files:
+                uploaded_files = pd.read_csv(f)
+                data_list.append(uploaded_files)
+                #store as df_cab and df_weather
+                df_cab = uploaded_files[0]
+                df_weather = uploaded_files[1]
+    if data_list is not None:
+        st.session_state['uploaded_files'] = data_list
+    
+    return df_cab, df_weather
 
 #Page A 
-def display_missingValue(df_cab, df_weather):
+def display_missingValue():
     """
     This function displays the missing value of the datasets
 
@@ -28,10 +48,5 @@ def display_missingValue(df_cab, df_weather):
         - missing values of the datasets
     """
 #code here
-    st.write("Missing values in df_cab")
-    st.write(df_cab.isnull().sum())
-    st.write("Missing values in df_weather")
-    st.write(df_weather.isnull().sum())
-
 
 

@@ -30,4 +30,25 @@ def display_missingValue(df_cab, df_weather):
     st.markdown('### df_weather Missing Values')
     st.bar_chart(df_weather.isnull().sum())
  
+ #Page A
+def fill_missingValue(df):
+    """
+    This function fills the missing value of the datasets for df_cab by dopping na and for df_weaether by the mean of the column
+
+    Input:
+        - two df_cab, df_weather
+    Output:
+        - updated df_cab, df_weather
+    """
+#code here
+    #fill missing data for df_cab and df_weather
+    df_cab = df_cab.dropna()
+    df_weather = df_weather.fillna(df_weather.mean())
+    #show information of df_cab and df_weather after filling missing data
+    st.markdown('### df_cab Information')
+    st.dataframe(df_cab.info())
+    st.markdown('### df_weather Information')
+    st.dataframe(df_weather.info())
+
+    
 

@@ -47,6 +47,15 @@ def display_missingValue():
     Output:
         - missing values of the datasets
     """
-#code here
+    df_rides = pd.read_csv('/datasets/cab_rides.csv')
+    df_weather = pd.read_csv('/datasets/weather.csv')
+
+    #dropping missing values from columns and rows in dataset
+
+    df_rides=df_rides.dropna(axis=0).reset_index(drop=True)
+    df_weather=df_weather.dropna(axis=0).reset_index(drop=True)
+
+    return df_rides, df_weather
+
 
 

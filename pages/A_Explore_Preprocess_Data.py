@@ -101,10 +101,34 @@ if cab_data and weather_data is not None:
     df_weather_avg = df_weather.groupby(['location']).mean().reset_index()
     st.write(df_weather_avg)
 
+    #create source_weather, destination_weather
+    source_weather_df= df_weather_avg.rename(columns={
+    'location':'source',
+    'temp':'source_temp',
+    'clouds': 'source_clouds',
+    'pressure':'source_pressure',
+    'rain': 'source_rain',
+    'humidity':'source_humidity',
+    'wind':'source_wind'})
+    source_weather_df
+    destination_weather_df= df_weather_avg.rename(columns={
+    'location':'destination',
+    'temp':'destination_temp',
+    'clouds': 'destination_clouds',
+    'pressure':'destination_pressure',
+    'rain': 'destination_rain',
+    'humidity':'destination_humidity',
+    'wind':'destination_wind'})
+    destination_weather_df
+
     #merge df_cab and df_weather
     st.markdown('### Merge cab and weather data')
-    df = pd.merge(df_cab, df_weather_avg, on='location')
-    
+    df_cab.merge(source_weather_df,on='source')
+    df = df_cab\
+    .merge(source_weather_df, on ='source')\
+    .merge(destination_weather_df, on='destination')
+    df
+
 
 
     # Handle Text and Categorical Attributes

@@ -2,6 +2,11 @@ import numpy as np                      # pip install numpy
 import pandas as pd                     # pip install pandas
 import streamlit as st                  # pip install streamlit
 from sklearn.metrics import recall_score, precision_score, accuracy_score
+from sklearn.linear_model import Lasso
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.model_selection import GridSearchCV
 
 # All pages
 
@@ -49,6 +54,61 @@ def remove_outliers(df, feature):
     return dataset, lower_bound, upper_bound
 
 
+
+#Page B
+
+def lasso_reg(x, y, cv, alpha_range):
+    model = Lasso()
+    param_grid = {'alpha': alpha_range}
+    grid_search = GridSearchCV(model, param_grid=param_grid, cv=cv, scoring='r2')
+    grid_search.fit(x, y)
+    st.session_state['Lasso Regression'] = grid_search.best_estimator_
+    return grid_search.best_estimator_
+
+
+def linear_reg(x, y, cv):
+    model = LinearRegression()
+    param_grid = {}
+    grid_search = GridSearchCV(model, param_grid=param_grid, cv=cv, scoring='r2')
+    grid_search.fit(x, y)
+    st.session_state['Linear Regression'] = grid_search.best_estimator_
+    return grid_search.best_estimator_
+
+
+def random_forest(x, y, cv, n_estimators_range, max_depth_range):
+    model = RandomForestRegressor()
+    param_grid = {'n_estimators': n_estimators_range, 'max_depth': max_depth_range}
+    grid_search = GridSearchCV(model, param_grid=param_grid, cv=cv, scoring='r2')
+    grid_search.fit(x, y)
+    st.session_state['Random Forest'] = grid_search.best_estimator_
+    return grid_search.best_estimator_
+
+
+def gradient_boost(x, y, cv, n_estimators_range, learning_rate_range):
+    model = GradientBoostingRegressor()
+    param_grid = {'n_estimators': n_estimators_range, 'learning_rate': learning_rate_range}
+    grid_search = GridSearchCV(model, param_grid=param_grid, cv=cv, scoring='r2')
+    grid_search.fit(x, y)
+    st.session_state['Gradient Boosting'] = grid_search.best_estimator_
+    return grid_search.best_estimator_
+
+
+def one_hot_encode_feature(df, feature):
+    """
+    This function performs one-hot-encoding on the given features using pd.get_dummies
+
+    Input: 
+        - df: the pandas dataframe
+        - feature: the feature(s) to perform one-hot-encoding
+    Output: 
+        - df: dataframe with one-hot-encoded feature
+    """    
+    # Add code here
+    df = pd.get_dummies(df, columns=[feature])
+
+    
+    st.write('Feature {} has been one-hot encoded.'.format(feature))
+    return df
 
 
 

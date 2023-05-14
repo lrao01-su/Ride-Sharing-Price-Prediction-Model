@@ -139,10 +139,24 @@ if cab_data and weather_data is not None:
     df.loc[(df.hour >= 18) | (df.hour < 6) , 'time_of_day'] = 'Night'
 
     #Visualizations 
-    fig = plt.figure(figsize=(15, 15))
+    fig = plt.figure(figsize=(10, 10))
     sns.scatterplot(data=df, x="distance", y="price", hue="surge_multiplier").set_title("Uber - Distance Vs Price")
     st.pyplot(fig)
+    
+    # Surge correlation with price and distance
+    st.subheader('Surge correlation with price and distance')
+    sns.heatmap(df[['distance', 'price', 'surge_multiplier']].corr(), cmap='viridis')
+    st.pyplot()
 
+    # Surge and Day of Week
+    st.subheader('Surge and Day of Week')
+    uber_df = df[df['cab_type'] == 'Uber']
+    lyft_df = df[df['cab_type'] == 'Lyft']
+    high_surge_dataset = lyft_df[lyft_df['surge_multiplier'] > 1]
+    t_high_surge = pd.DataFrame(high_surge_dataset.groupby(["weekday", "surge_multiplier"]).size().reset_index())
+    t_high_surge.columns = ["Weekday", "Surge", "Count"]
+    fig = sns.barplot(x="Weekday", y="Count", hue="Surge", data=t_high_surge)
+    st.pyplot(fig)
 
 
     # Remove outliers

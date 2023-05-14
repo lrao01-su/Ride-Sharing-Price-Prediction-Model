@@ -59,6 +59,7 @@ def remove_outliers(df, feature):
 
 
 
+
 #Page B
 
 def lasso_reg(x, y, cv, alpha_range):

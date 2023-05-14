@@ -148,5 +148,7 @@ if cab_data and weather_data is not None:
 
     st.markdown('### You have preprocessed the dataset.')
     #st.dataframe(df)
+    #store preprocessed dataset in session state
+    st.session_state['data'] = df
 
     st.write('Continue to Train Model')

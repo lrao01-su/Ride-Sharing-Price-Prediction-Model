@@ -143,7 +143,7 @@ if cab_data and weather_data is not None:
     sns.heatmap(df[['distance', 'price', 'surge_multiplier']].corr(), cmap='viridis')
     st.pyplot()
 
-    # Surge and Day of Weekk
+    # Surge and Day of Week
     st.subheader('Surge and Day of Week')
     uber_df = df[df['cab_type'] == 'Uber']
     lyft_df = df[df['cab_type'] == 'Lyft']

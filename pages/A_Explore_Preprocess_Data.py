@@ -143,18 +143,13 @@ if cab_data and weather_data is not None:
 
     #list all column names
     st.write(df.columns)
-
-
-    # Surge and Day of Week
-    st.subheader('Surge and Day of Week')
-    uber_df = df[df['cab_type'] == 'Uber']
-    lyft_df = df[df['cab_type'] == 'Lyft']
-    high_surge_dataset = lyft_df[lyft_df['surge_multiplier'] > 1]
-    t_high_surge = pd.DataFrame(high_surge_dataset.groupby(["weekday", "surge_multiplier"]).size().reset_index())
-    t_high_surge.columns = ["Weekday", "Surge", "Count"]
-    fig = sns.barplot(x="Weekday", y="Count", hue="Surge", data=t_high_surge)
+    #surge corellation with price and distance
+    st.subheader('Surge Corellation with Price and Distance')
+    fig, ax = plt.subplots()
+    #size of the figure
+    fig.set_size_inches(5, 3)
+    sns.heatmap(df[['surge_multiplier','price','distance']].corr(),cmap='viridis')
     st.pyplot(fig)
-
 
     # Remove outliers
     st.markdown("### Inspect Features and Remove Outliers")

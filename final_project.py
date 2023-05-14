@@ -1,4 +1,4 @@
-import streamlit as st                  # pip install streamlit
+import streamlit as st              # pip install streamlit
 
 st.markdown("# Practical Applications of Machine Learning (PAML)")
 

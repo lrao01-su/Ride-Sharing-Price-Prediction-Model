@@ -2,7 +2,7 @@ import streamlit as st                  # pip install streamlit
 #from helper_functions import fetch_dataset
 from sklearn.model_selection import train_test_split
 
-from helper_functions import lasso_reg, linear_reg, random_forest, gradient_boost, one_hot_encode_feature
+from helper_functions import lasso_reg, linear_reg, random_forest, gradient_boost, one_hot_encode_feature, split_dataset
 
 #############################################
 
@@ -19,49 +19,6 @@ st.title('Train Model')
 #############################################
 
 df = st.session_state['data']
-
-def split_dataset(X, y, number,random_state=45):
-    """
-    This function splits the dataset into the train data and the test data
-
-    Input: 
-        - X: training features
-        - y: training targets
-        - number: the ratio of test samples
-    Output: 
-        - X_train: training features
-        - X_val: test/validation features
-        - y_train: training targets
-        - y_val: test/validation targets
-    """
-    X_train = []
-    X_val = []
-    y_train = []
-    y_val = []
-    
-
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=number/100, random_state=random_state)
-        
-
-    train_percentage = (len(X_train) /
-                            (len(X_train)+len(X_val)))*100
-
-    test_percentage = ((len(X_val))/
-                           (len(X_train)+len(X_val)))*100
-
-
-    # Print dataset split result
-    st.markdown('The training dataset contains {0:.2f} observations ({1:.2f}%) and the test dataset contains {2:.2f} observations ({3:.2f}%).'.format(len(X_train),
-                                                                                                                                                          train_percentage,
-                                                                                                                                                          len(X_val),
-                                                                                                                                                          test_percentage))
-    # Save state of train and test splits in st.session_state
-    st.session_state['X_train'] = X_train
-    st.session_state['X_val'] = X_val
-    st.session_state['y_train'] = y_train
-    st.session_state['y_val'] = y_val
-
-    return X_train, X_val, y_train, y_val
 
 def inspect_coefficients(models):
     pass

@@ -137,11 +137,6 @@ if cab_data and weather_data is not None:
     df.loc[(df.hour >= 12) & (df.hour < 15) , 'time_of_day'] = 'Afternoon'
     df.loc[(df.hour >= 15) & (df.hour < 18) , 'time_of_day'] = 'Evening'
     df.loc[(df.hour >= 18) | (df.hour < 6) , 'time_of_day'] = 'Night'
-
-    #Visualizations 
-    fig = plt.figure(figsize=(10, 10))
-    sns.scatterplot(data=df, x="distance", y="price", hue="surge_multiplier").set_title("Uber - Distance Vs Price")
-    st.pyplot(fig)
     
     # Surge correlation with price and distance
     st.subheader('Surge correlation with price and distance')

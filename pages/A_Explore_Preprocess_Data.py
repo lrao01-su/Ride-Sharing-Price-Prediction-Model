@@ -145,6 +145,15 @@ if cab_data and weather_data is not None:
     st.write(df.columns)
 
 
+    # Surge and Day of Week
+    st.subheader('Surge and Day of Week')
+    uber_df = df[df['cab_type'] == 'Uber']
+    lyft_df = df[df['cab_type'] == 'Lyft']
+    high_surge_dataset = lyft_df[lyft_df['surge_multiplier'] > 1]
+    t_high_surge = pd.DataFrame(high_surge_dataset.groupby(["weekday", "surge_multiplier"]).size().reset_index())
+    t_high_surge.columns = ["Weekday", "Surge", "Count"]
+    fig = sns.barplot(x="Weekday", y="Count", hue="Surge", data=t_high_surge)
+    st.pyplot(fig)
 
 
     # Remove outliers

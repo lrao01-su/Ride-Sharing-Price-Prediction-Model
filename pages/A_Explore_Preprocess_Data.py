@@ -122,7 +122,8 @@ if cab_data and weather_data is not None:
     df = df_cab\
     .merge(source_weather_df, on ='source')\
     .merge(destination_weather_df, on='destination')
-    
+    #display merged dataframe
+    st.write(df)
     #convert time_stamp to datetime
     df["rounded_timestamp"] = df["time_stamp"] / 1000
     df["rounded_timestamp"] = df["rounded_timestamp"].apply(np.floor)
@@ -137,21 +138,13 @@ if cab_data and weather_data is not None:
     df.loc[(df.hour >= 12) & (df.hour < 15) , 'time_of_day'] = 'Afternoon'
     df.loc[(df.hour >= 15) & (df.hour < 18) , 'time_of_day'] = 'Evening'
     df.loc[(df.hour >= 18) | (df.hour < 6) , 'time_of_day'] = 'Night'
-    
-    # Surge correlation with price and distance
-    st.subheader('Surge correlation with price and distance')
-    sns.heatmap(df[['distance', 'price', 'surge_multiplier']].corr(), cmap='viridis')
-    st.pyplot()
+    #drop time_stamp
+    df = df.drop(['time_stamp'], axis=1)
 
-    # Surge and Day of Week
-    st.subheader('Surge and Day of Week')
-    uber_df = df[df['cab_type'] == 'Uber']
-    lyft_df = df[df['cab_type'] == 'Lyft']
-    high_surge_dataset = lyft_df[lyft_df['surge_multiplier'] > 1]
-    t_high_surge = pd.DataFrame(high_surge_dataset.groupby(["weekday", "surge_multiplier"]).size().reset_index())
-    t_high_surge.columns = ["Weekday", "Surge", "Count"]
-    fig = sns.barplot(x="Weekday", y="Count", hue="Surge", data=t_high_surge)
-    st.pyplot(fig)
+    #list all column names
+    st.write(df.columns)
+
+
 
 
     # Remove outliers

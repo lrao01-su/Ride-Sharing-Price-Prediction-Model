@@ -1,14 +1,14 @@
 import streamlit as st                  # pip install streamlit
 from helper_functions import  display_missingValue, remove_outliers
+import seaborn as sns
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import matplotlib.pyplot as plt
 from pandas.plotting import scatter_matrix
-import os
-import tarfile
-import urllib.request
 from itertools import combinations
+from datetime import datetime
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -67,11 +67,6 @@ if cab_data and weather_data is not None:
     missing_data = display_missingValue(df_cab, df_weather)
     st.dataframe(missing_data)
 
-    #display df_cab and df_weather dataframes
-    st.markdown('### df_cab Dataframe')
-    st.dataframe(df_cab)
-    st.markdown('### df_weather Dataframe')
-    st.dataframe(df_weather)
 
     #remove missing data in df_cab
     st.markdown('### Remove Missing df_cab Data')
@@ -101,7 +96,6 @@ if cab_data and weather_data is not None:
     st.markdown('### Group df_weather Data by average based on the same location')
     df_weather_avg = df_weather.groupby(['location']).mean().reset_index()
     st.write(df_weather_avg)
-
     #create source_weather, destination_weather
     source_weather_df= df_weather_avg.rename(columns={
     'location':'source',
@@ -128,7 +122,28 @@ if cab_data and weather_data is not None:
     df = df_cab\
     .merge(source_weather_df, on ='source')\
     .merge(destination_weather_df, on='destination')
-    df
+    
+    #convert time_stamp to datetime
+    df["rounded_timestamp"] = df["time_stamp"] / 1000
+    df["rounded_timestamp"] = df["rounded_timestamp"].apply(np.floor)
+
+    df["date"] = df["rounded_timestamp"].apply(lambda x : datetime.fromtimestamp(x).date())
+    df["time"] = df["rounded_timestamp"].apply(lambda x: datetime.fromtimestamp(x).time())
+    df['weekday'] = df['date'].apply(lambda x: x.weekday())
+    df["weekday"] = df["weekday"].map({0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'})
+    df['hour'] = df['time'].apply(lambda time: time.hour)
+
+    df.loc[(df.hour >= 6) & (df.hour < 12) , 'time_of_day'] = 'Morning'
+    df.loc[(df.hour >= 12) & (df.hour < 15) , 'time_of_day'] = 'Afternoon'
+    df.loc[(df.hour >= 15) & (df.hour < 18) , 'time_of_day'] = 'Evening'
+    df.loc[(df.hour >= 18) | (df.hour < 6) , 'time_of_day'] = 'Night'
+
+    #Visualizations 
+    fig = plt.figure(figsize=(15, 15))
+    sns.scatterplot(data=df, x="distance", y="price", hue="surge_multiplier").set_title("Uber - Distance Vs Price")
+    st.pyplot(fig)
+
+
 
     # Remove outliers
     st.markdown("### Inspect Features and Remove Outliers")
@@ -145,6 +160,7 @@ if cab_data and weather_data is not None:
         st.write('Outliers for feature {} are lower than {} and higher than {}'.format(
             outlier_feature_select, lower_bound, upper_bound))
         st.write(df)
+    
 
     st.markdown('### You have preprocessed the dataset.')
     #st.dataframe(df)

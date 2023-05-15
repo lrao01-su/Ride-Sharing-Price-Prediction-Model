@@ -1,5 +1,5 @@
 import streamlit as st
-from helper_functions import one_hot_encode_feature
+from helper_functions import one_hot_encode_feature, ordinal
 import pandas as pd
 #############################################
 
@@ -129,10 +129,11 @@ if df is not None:
 
     selected_features_df = pd.DataFrame.from_dict(user_input, orient='index').T
 
-    df = pd.get_dummies(selected_features_df, columns=['source', 'name','cab_type', 'time_of_day', 'weekday'])
+    df = ordinal(selected_features_df, ['source', 'name','cab_type', 'time_of_day', 'weekday'])
 
     if st.button('Predict the Price'):
         cab_price = deploy_model(df)
+        
 
 
         cab_price = str(cab_price[0])

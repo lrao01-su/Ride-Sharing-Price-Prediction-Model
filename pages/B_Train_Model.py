@@ -242,7 +242,7 @@ if df is not None:
 
         
         if st.button('Train Gradient Boosting Model'):
-            gradient_boost(X_train, y_train, cv_random_forest, estimator_range_gb, lr)
+            gradient_boost(X_train, y_train, cv_gb, estimator_range_gb, lr)
 
         if regression_methods_options[3] not in st.session_state:
             st.write('Gradient Boosting Model is untrained')

@@ -2,7 +2,7 @@ import streamlit as st                  # pip install streamlit
 #from helper_functions import fetch_dataset
 from sklearn.model_selection import train_test_split
 
-from helper_functions import lasso_reg, linear_reg, random_forest, gradient_boost, one_hot_encode_feature, split_dataset
+from helper_functions import lasso_reg, linear_reg, random_forest, gradient_boost, one_hot_encode_feature, split_dataset, ordinal
 
 #############################################
 
@@ -26,43 +26,46 @@ def inspect_coefficients(models):
 
 if df is not None:
     # Display dataframe as table
-    st.dataframe(df)
+    #st.dataframe(df)
     string_columns = list(df.select_dtypes(['object']).columns)
 
-    text_feature_select_onehot = st.selectbox('Select text features for One-hot encoding', string_columns)
 
     df = df.dropna()
 
-    if (text_feature_select_onehot and st.button('One-hot Encode feature')):
-        if 'one_hot_encode' not in st.session_state:
-            st.session_state['one_hot_encode'] = {}
-        if text_feature_select_onehot not in st.session_state['one_hot_encode']:
-            st.session_state['one_hot_encode'][text_feature_select_onehot] = True
-        else:
-            st.session_state['one_hot_encode'][text_feature_select_onehot] = True
-        df = one_hot_encode_feature(df, text_feature_select_onehot)
+    text_feature_select_onehot = df.select_dtypes(include='object').columns.tolist()
 
-    feature_predict_select = st.selectbox(
-        label='Select variable to predict',
-        options=list(df.select_dtypes(include='number').columns),
-        key='feature_selectbox',
-        index=8
-    )
 
-    st.session_state['target'] = feature_predict_select
 
-    # Select input features
+    if st.button('Encode categorical features'):
+
+    
+        text_feature_select_onehot = df.select_dtypes(include='object').columns.tolist()
+
+        df = ordinal(df, text_feature_select_onehot)
+        st.dataframe(df)
+        df.dropna()
+
+        st.session_state['data'] = df
+
+
+    #df = st.session_state['data']
+
+    feature_predict_select = 'price'
+
     feature_input_select = st.multiselect(
         label='Select features for regression input',
-        options=[f for f in list(df.select_dtypes(
-            include='number').columns) if f != feature_predict_select],
+        options=[f for f in list(df.columns) if f != feature_predict_select],
         key='feature_multiselect'
     )
 
-    st.session_state['feature'] = feature_input_select
 
     st.write('You selected input {} and output {}'.format(
         feature_input_select, feature_predict_select))
+
+    
+    
+    
+
 
 
     X = df.loc[:, df.columns.isin(feature_input_select)]
@@ -77,12 +80,13 @@ if df is not None:
     number = st.number_input(
         label='Enter size of test set (X%)', min_value=0, max_value=100, value=30, step=1)
 
-
+    df = df.dropna()
     X_train, X_val, y_train, y_val = split_dataset(X, Y, number)
 
     st.write(len(X_train))
     st.write(len(X_val))
 
+  
     regression_methods_options = ['Linear Regression',
                                   'Lasso Regression', 'Random Forest', 'Gradient Boosting']
 
@@ -97,6 +101,8 @@ if df is not None:
 
 
     #  Linear Regression
+
+
 
 
     if (regression_methods_options[0] in regression_model_select):

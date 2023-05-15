@@ -20,7 +20,7 @@ st.markdown("""
 - Uber and Lyft are two of the most popular ride-sharing services in the world.
 - Both companies have a similar business model, but they have different pricing models.
 
-The problem we aim to address is the current inability to predict and compare the pricing models of Uber and Lyft with a high level of accuracy. This limitation hinders consumers' ability to make informed choices and ride-sharing companies' capacity to optimize their pricing strategies effectively. The lack of robust insights into the dynamic pricing dynamics also restricts the industry's ability to understand market fluctuations, resulting in potential challenges for consumer decision-making, company competitiveness, and the overall advancement of the ride-sharing sector.
+The problem we aim to address is the current inability to predict and compare the pricing models of Uber and Lyft with a high level of accuracy. This limitation hinders consumers' ability to make informed choices and ride-sharing companies' capacity to optimize their pricing strategies effectively. The lack of robust insights into the pricing dynamics also restricts the industry's ability to understand market fluctuations, resulting in potential challenges for consumer decision-making, company competitiveness, and the overall advancement of the ride-sharing sector.
 
 ### Our Goal
 Build a machine learning model using techniques such as:

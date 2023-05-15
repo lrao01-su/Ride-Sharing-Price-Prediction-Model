@@ -135,7 +135,7 @@ if df is not None:
         cab_price = deploy_model(df)
 
 
-        cab_price = str(cab_price[0][0])
+        cab_price = str(cab_price[0])
 
         st.markdown("Price for {} for the entered inputs is:".format(cab_select))
 

@@ -11,6 +11,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+from sklearn.preprocessing import OrdinalEncoder
+
 
 # All pages
 
@@ -31,6 +33,10 @@ def display_missingValue(df_cab, df_weather):
     st.write('df_weather')
     st.write(df_weather.isnull().sum())
     return df_cab.isnull().sum(), df_weather.isnull().sum()
+
+
+
+
 
 def remove_outliers(df, feature):
     """
@@ -56,7 +62,6 @@ def remove_outliers(df, feature):
     dataset = df[(df[feature] > lower_bound) & (df[feature] < upper_bound)]
     #st.write('remove_outliers not implemented yet.')
     return dataset, lower_bound, upper_bound
-
 
 
 
@@ -98,7 +103,21 @@ def gradient_boost(x, y, cv, n_estimators_range, learning_rate_range):
     return grid_search.best_estimator_
 
 
-def one_hot_encode_feature(df, feature):
+
+def ordinal(df, features):
+
+    enc = OrdinalEncoder()
+    
+
+
+    X_enc = enc.fit_transform(df[features])
+    df[features] = pd.DataFrame(X_enc, columns=[features])
+
+    return df
+
+
+
+def one_hot_encode_feature(df, features):
     """
     This function performs one-hot-encoding on the given features using pd.get_dummies
 
@@ -109,10 +128,12 @@ def one_hot_encode_feature(df, feature):
         - df: dataframe with one-hot-encoded feature
     """    
     # Add code here
-    df = pd.get_dummies(df, columns=[feature])
+    for feature in features:
+        st.write(feature)
+        df = pd.get_dummies(df, columns=[feature])
+        st.write('Feature {} has been one-hot encoded.'.format(feature))
 
     
-    st.write('Feature {} has been one-hot encoded.'.format(feature))
     return df
 
 def split_dataset(X, y, number,random_state=45):
@@ -353,7 +374,6 @@ def plot_learning_curve(X_train, X_val, y_train, y_val, trained_model, metrics, 
     st.plotly_chart(fig)
 
     return fig, df
-
 
 
 

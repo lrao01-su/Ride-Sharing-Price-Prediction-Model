@@ -15,7 +15,33 @@ st.markdown("### Olga Acuña Leanos (oea9), Linjing Rao (lr534) and Meet Oza (mg
 
 #############################################
 
-st.markdown("Our project, Farelytics ML: Using Machine Learning to Analyze and Compare Uber and Lyft Pricing Models, is dedicated to developing a machine learning model capable of accurately predicting and comparing the pricing models of Uber and Lyft. To achieve this, we have employed machine learning methodologies designed to handle large datasets and numerous variables. By utilizing techniques such as linear regression, lasso ridge, random forest, and gradient boosting, our project aims to uncover the key factors that significantly influence pricing and gain valuable insights into the underlying pricing strategies employed by both companies. One of the distinguishing features of our project is the incorporation of a comprehensive set of variables that encompass various aspects of ride-sharing services. These variables include distance, ride type (Lux, premier, X, XL), weather conditions, time, demand, and company-specific factors. By considering these wide range of factors, we adopt a holistic approach to understanding and predicting the pricing models of Uber and Lyft. The primary goal of our project is to provide invaluable insights into the ride-sharing industry. Not only does it offer a deeper understanding of the factors that drive pricing dynamics, but it also empowers consumers and ride-sharing companies to make data-driven decisions and optimize their pricing strategies. By bridging the gap between data science and the ride-sharing sector, our project advances the field of pricing analysis and decision-making processes, ultimately benefiting the industry as a whole.")
+st.markdown("""
+### Problem
+- Uber and Lyft are two of the most popular ride-sharing services in the world.
+- Both companies have a similar business model, but they have different pricing models.
+
+The problem we aim to address is the current inability to predict and compare the pricing models of Uber and Lyft with a high level of accuracy. This limitation hinders consumers' ability to make informed choices and ride-sharing companies' capacity to optimize their pricing strategies effectively. The lack of robust insights into the dynamic pricing dynamics also restricts the industry's ability to understand market fluctuations, resulting in potential challenges for consumer decision-making, company competitiveness, and the overall advancement of the ride-sharing sector.
+
+### Our Goal
+Build a machine learning model using techniques such as:
+- Linear Regression
+- Lasso Regression
+- Random Forest
+- Gradient Boosting
+
+While also incorporating a comprehensive set of variables including:
+- Distance
+- Weather
+- Ride Type (Uber Black, Lux, premier, X, XL
+- Time of Day
+- Demand
+- Company specific factors)
+
+In an effort to:
+- Uncover the significant factors that influence pricing and provide a holistic understanding of Uber and Lyft's pricing strategies
+- Empower consumers to make informed decisions about their ride-sharing choices
+"""
+)
 
 
 #############################################

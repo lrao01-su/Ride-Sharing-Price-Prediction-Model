@@ -2,13 +2,28 @@
 
 # Predicting Product Review Sentiment Using Classification
 
-The goal of this template is to build a classification machine learning (ML) pipeline in a web application to use as a tool to analyze the models to gain useful insights about model performance. Using trained classification models, build a ML application that predicts whether a product review is positive or negative.
+The problem: Predicting and comparing the pricing models of Uber and Lyft
+Importance: Ride-sharing services have become popular and their pricing models can vary greatly depending on various factors
+Goal: Develop a machine learning model to predict and compare the pricing models of Uber and Lyft
+Benefit: Help consumers make more informed decisions and help ride sharing companies optimize their pricing strategy, also it can help understand these two companies and their pricing model better.
 
-The template does the following:
-* Build end-to-end regression pipeline using 1) multiple regression, 2) polynomial regression, and 3) ridge, and 4) lasso regression.
-* Evaluate regression methods using standard metrics including root mean squared error (RMSE), mean absolute error (MAE), and coefficient of determination (R2).
-* Develop a web application that walks users through steps of the regression pipeline and provide tools to analyze multiple methods across multiple metrics. 
-* Develop a web application that offers a service to customers by predicting housing prices using regression models. 
+Machine Learning Pipelins:
+Data exploration: 
+Exploring Uber and Lyft Datasets to identify the variables that are most relevant to the pricing models
+Analyze the distribution and correlation of the variables to ensure their suitability for the models
+Preprocessing: 
+Cleaning, transforming and scaling the variables 
+Handle missing values with mean values of that column
+Merging weather data with cab ride data by timestamp
+Outlier Removal: We have removed the outliers based on the IQR
+One-hot Integers: Since we have categorical columns, we will use one-hot to convert them
+Model Training and Evaluation:
+Linear regression
+Lasso ridge
+Random forest
+Gradient boosting
+Deployment:
+Deploy trained models in an application that can predict and compare the pricing models of Uber and Lyft based on user inputs
 
 Run the application:
 ```

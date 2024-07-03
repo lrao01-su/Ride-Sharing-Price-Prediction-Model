@@ -1,13 +1,11 @@
-# Practical Applications in Machine Learning Final Project Template
-
-# Predicting Product Review Sentiment Using Classification
+# Predicting and comparing the pricing models of Uber and Lyft
 
 The problem: Predicting and comparing the pricing models of Uber and Lyft
 Importance: Ride-sharing services have become popular and their pricing models can vary greatly depending on various factors
 Goal: Develop a machine learning model to predict and compare the pricing models of Uber and Lyft
 Benefit: Help consumers make more informed decisions and help ride sharing companies optimize their pricing strategy, also it can help understand these two companies and their pricing model better.
 
-Machine Learning Pipelins:
+# Machine Learning Pipelins:
 Data exploration: 
 Exploring Uber and Lyft Datasets to identify the variables that are most relevant to the pricing models
 Analyze the distribution and correlation of the variables to ensure their suitability for the models
